@@ -1,12 +1,20 @@
 package com.tactfactory.monsuperprojet.entities;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tactfactory.monsuperprojet.database.contracts.RoleContract;
 
 @Entity
+@Table(name = RoleContract.TABLE)
+@AttributeOverride(name = "id", column = @Column(name=RoleContract.COL_ID))
 public class Role extends EntityDb {
 
-    @NotNull
+    @JsonProperty(value = RoleContract.COL_NAME)
+    @Column(name = RoleContract.COL_NAME, nullable = false)
     private String name;
 
     /**
