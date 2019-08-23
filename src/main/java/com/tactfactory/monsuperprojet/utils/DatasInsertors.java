@@ -1,27 +1,25 @@
-package com.tactfactory.monsuperprojet.controllers;
+package com.tactfactory.monsuperprojet.utils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
 import com.github.javafaker.Faker;
-import com.tactfactory.monsuperprojet.MonsuperprojetApplication;
 import com.tactfactory.monsuperprojet.database.repositories.EntrepriseRepository;
 import com.tactfactory.monsuperprojet.database.repositories.RoleRepository;
 import com.tactfactory.monsuperprojet.database.repositories.UserRepository;
 import com.tactfactory.monsuperprojet.entities.Entreprise;
 import com.tactfactory.monsuperprojet.entities.Role;
 import com.tactfactory.monsuperprojet.entities.User;
-import com.tactfactory.monsuperprojet.utils.DatasInsertors;
 
-@RestController
-@RequestMapping("/tests")
-public class TestController {
+@Service(value="baseDatasInsertors")
+public class DatasInsertors {
 
   @Autowired
   private EntrepriseRepository entrepriseRepository;
@@ -32,11 +30,15 @@ public class TestController {
   @Autowired
   private UserRepository userRepository;
 
-  @Autowired
-  @Qualifier(value="baseDatasInsertors")
-  private DatasInsertors insertors;
+  public DatasInsertors() {
+    System.out.println("coucou");
+  }
 
-  @RequestMapping("/insert")
+  public DatasInsertors(Integer test) {
+    System.out.println("coucou2");
+  }
+
+  @PostConstruct
   public void InsertData() {
     Faker faker = new Faker(Locale.FRENCH);
 
@@ -75,7 +77,7 @@ public class TestController {
       }
     }
 
- // Save all entreprise
+    // Save all entreprise
     entrepriseRepository.saveAll(entreprises);
 
     i = 0;
@@ -90,12 +92,42 @@ public class TestController {
       i++;
     }
 
-
-
   }
 
-  @RequestMapping("/insertOneShoot")
   public void insertOneShoot() {
-    insertors.insertOneShoot();
+    Faker faker = new Faker(Locale.FRENCH);
+
+    List<String> professions = new ArrayList<String>();
+    int i = 0;
+    while (i < 10) {
+      String prof = faker.company().profession();
+      if (!professions.contains(prof)) {
+        professions.add(prof);
+        i++;
+      }
+    }
+
+    List<String> companies = new ArrayList<String>();
+    i = 0;
+    while (i < 10) {
+      String comp = faker.company().name();
+      if (!companies.contains(comp)) {
+        companies.add(comp);
+        i++;
+      }
+    }
+
+    Entreprise entreprise = new Entreprise(companies.get(faker.random().nextInt(0, companies.size() - 1)),
+        faker.address().streetAddress(), faker.company().industry());
+    entrepriseRepository.save(entreprise);
+
+    Role role = new Role(professions.get(faker.random().nextInt(0, professions.size() - 1)));
+    roleRepository.save(role);
+
+    User user = new User(faker.name().firstName(), faker.name().lastName(), faker.date().birthday());
+    user.setEntreprise(entreprise);
+    user.setRole(role);
+
+    userRepository.save(user);
   }
 }
