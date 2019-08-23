@@ -1,5 +1,6 @@
 package com.tactfactory.monsuperprojet.utils;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -11,123 +12,31 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.github.javafaker.Faker;
-import com.tactfactory.monsuperprojet.database.repositories.EntrepriseRepository;
-import com.tactfactory.monsuperprojet.database.repositories.RoleRepository;
-import com.tactfactory.monsuperprojet.database.repositories.UserRepository;
-import com.tactfactory.monsuperprojet.entities.Entreprise;
-import com.tactfactory.monsuperprojet.entities.Role;
-import com.tactfactory.monsuperprojet.entities.User;
+import com.tactfactory.monsuperprojet.database.repositories.DataRepository;
+import com.tactfactory.monsuperprojet.entities.Data;
 
 @Service(value="baseDatasInsertors")
 public class DatasInsertors {
 
   @Autowired
-  private EntrepriseRepository entrepriseRepository;
-
-  @Autowired
-  private RoleRepository roleRepository;
-
-  @Autowired
-  private UserRepository userRepository;
-
-  public DatasInsertors() {
-    System.out.println("coucou");
-  }
-
-  public DatasInsertors(Integer test) {
-    System.out.println("coucou2");
-  }
+  private DataRepository entrepriseRepository;
 
   @PostConstruct
   public void InsertData() {
     Faker faker = new Faker(Locale.FRENCH);
+    Integer loop = faker.random().nextInt(10, 100);
+    List<Data> datas = new ArrayList<Data>();
+    for (int i = 0; i < loop; i++) {
+      datas.add(new Data(faker.lorem().word(),faker.lorem().sentence(),LocalDateTime.now()));
 
-    List<String> professions = new ArrayList<String>();
-    int i = 0;
-    while (i < 10) {
-      String prof = faker.company().profession();
-      if (!professions.contains(prof)) {
-        professions.add(prof);
-        i++;
+      List<Data> toInsert = new ArrayList<>();
+      for (int j = 0; j < faker.random().nextInt(datas.size()); j++) {
+        toInsert.add(datas.get(faker.random().nextInt(datas.size()-1)));
       }
+
+      datas.get(i).setDatas(toInsert);
+      entrepriseRepository.save(datas.get(i));
     }
 
-    List<Role> roles = new ArrayList<>();
-    for (String prof : professions) {
-      Role role = new Role(prof);
-      roles.add(role);
-    }
-
-    // Save all roles
-    roleRepository.saveAll(roles);
-
-    List<String> companies = new ArrayList<String>();
-    List<Entreprise> entreprises = new ArrayList<Entreprise>();
-
-    i = 0;
-    while (i < 10) {
-      String comp = faker.company().name();
-      if (!companies.contains(comp)) {
-        companies.add(comp);
-
-        Entreprise entreprise = new Entreprise(comp, faker.address().streetAddress(), faker.company().industry());
-        entreprises.add(entreprise);
-
-        i++;
-      }
-    }
-
-    // Save all entreprise
-    entrepriseRepository.saveAll(entreprises);
-
-    i = 0;
-    while (i < 100) {
-      User user = new User(faker.name().firstName(), faker.name().lastName(), faker.date().birthday());
-      user.setEntreprise(entreprises.get(faker.random().nextInt(0, entreprises.size() - 1)));
-      user.setRole(roles.get(faker.random().nextInt(0, roles.size() - 1)));
-
-      // Save all user
-      userRepository.save(user);
-
-      i++;
-    }
-
-  }
-
-  public void insertOneShoot() {
-    Faker faker = new Faker(Locale.FRENCH);
-
-    List<String> professions = new ArrayList<String>();
-    int i = 0;
-    while (i < 10) {
-      String prof = faker.company().profession();
-      if (!professions.contains(prof)) {
-        professions.add(prof);
-        i++;
-      }
-    }
-
-    List<String> companies = new ArrayList<String>();
-    i = 0;
-    while (i < 10) {
-      String comp = faker.company().name();
-      if (!companies.contains(comp)) {
-        companies.add(comp);
-        i++;
-      }
-    }
-
-    Entreprise entreprise = new Entreprise(companies.get(faker.random().nextInt(0, companies.size() - 1)),
-        faker.address().streetAddress(), faker.company().industry());
-    entrepriseRepository.save(entreprise);
-
-    Role role = new Role(professions.get(faker.random().nextInt(0, professions.size() - 1)));
-    roleRepository.save(role);
-
-    User user = new User(faker.name().firstName(), faker.name().lastName(), faker.date().birthday());
-    user.setEntreprise(entreprise);
-    user.setRole(role);
-
-    userRepository.save(user);
   }
 }
