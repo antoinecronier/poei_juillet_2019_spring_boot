@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tactfactory.monsuperprojet.controllers.dtos.UserRichDto;
 import com.tactfactory.monsuperprojet.database.repositories.EntrepriseRepository;
 import com.tactfactory.monsuperprojet.database.repositories.RoleRepository;
 import com.tactfactory.monsuperprojet.database.repositories.UserRepository;
@@ -52,4 +53,13 @@ public class UserAdvanceCrudController {
 
     repository.save(user);
   }
+
+  @PostMapping("/createRich")
+  public void createUser(UserRichDto userRich) {
+    for (int i = 0; i < userRich.getNumberItem(); i++) {
+      System.out.println(userRich.getCreatedFor());
+      System.out.println(userRich.getUser());
+    }
+  }
+
 }
