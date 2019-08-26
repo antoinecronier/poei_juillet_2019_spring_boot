@@ -9,6 +9,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tactfactory.monsuperprojet.database.contracts.EntrepriseContract;
 import com.tactfactory.monsuperprojet.database.contracts.RoleContract;
@@ -29,6 +32,7 @@ public class User extends EntityDb{
 
   @JsonProperty(value = UserContract.COL_DATE_OF_BIRTH)
   @Column(name = UserContract.COL_DATE_OF_BIRTH, nullable = false)
+  @DateTimeFormat(pattern = "yyyy-MM-dd",iso=ISO.DATE)
   private Date dateOfBirth;
 
   @JsonProperty(value = UserContract.COL_FK_ID_ROLE)
