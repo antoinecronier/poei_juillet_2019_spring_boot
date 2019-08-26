@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.javafaker.Faker;
 import com.tactfactory.monsuperprojet.controllers.dtos.UserRichDto;
 import com.tactfactory.monsuperprojet.database.repositories.EntrepriseRepository;
 import com.tactfactory.monsuperprojet.database.repositories.RoleRepository;
