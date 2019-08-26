@@ -29,11 +29,6 @@ public class UserAdvanceCrudController {
   @GetMapping("/userByFLName")
   public List<User> getAllUserByFirstnameLastname(@PathParam(value = "firstname") String firstname,
       @PathParam(value = "lastname") String lastname) {
-    return (List<User>) repository.getUserWithFirstnameLastname(firstname, lastname);
-  }
-
-  @GetMapping("/older")
-  public List<User> getAllUserOlderThan18AtDate(@PathParam(value = "timeToCheck") LocalDateTime timeToCheck) {
-    return (List<User>) repository.getUserIfOlderThan18AtDate(timeToCheck);
+    return (List<User>) repository.findAllByFirstnameAndLastname(firstname, lastname);
   }
 }

@@ -10,9 +10,11 @@ import com.tactfactory.monsuperprojet.database.contracts.UserContract;
 import com.tactfactory.monsuperprojet.entities.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer>, UserRepositoryCustom {
+public interface UserRepository extends JpaRepository<User, Integer> {
 
   @Query("SELECT u FROM " + UserContract.TABLE + " u WHERE u." + UserContract.COL_FIRSTNAME + " = ?1 and u."
       + UserContract.COL_LASTNAME + " = ?2")
   List<User> getUserWithFirstnameLastname(String firstname, String lastname);
+
+  List<User> findAllByFirstnameAndLastname(String firstname, String lastname);
 }
