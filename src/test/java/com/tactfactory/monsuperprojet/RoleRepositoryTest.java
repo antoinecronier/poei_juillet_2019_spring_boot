@@ -32,6 +32,6 @@ public class RoleRepositoryTest {
     Role role = new Role("roleTest");
     repository.save(role);
     Role roleTest = repository.findAll().iterator().next();
-    assertTrue(role.getName().equals(roleTest.getName()));
+    assertTrue(role.getId().equals(roleTest.getId()) && role.getName().equals(roleTest.getName()));
   }
 }
