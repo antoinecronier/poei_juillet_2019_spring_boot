@@ -53,4 +53,17 @@ public class EntrepriseRestControllerTest extends BaseRestControllerTest<Entrepr
         && item1.getAdresse().equals(item2.getAdresse()) && item1.getType().equals(item2.getType());
   }
 
+  @Override
+  protected Entreprise parseJsonToObject(StringBuilder builder)
+      throws JsonParseException, JsonMappingException, IOException {
+    ObjectMapper mapper = new ObjectMapper();
+    return mapper.readValue(builder.toString(), new TypeReference<Entreprise>() {
+    });
+  }
+
+  @Override
+  protected Integer getItemIdToTest() {
+    return 1;
+  }
+
 }

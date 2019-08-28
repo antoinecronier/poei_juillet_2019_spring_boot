@@ -42,12 +42,22 @@ public class RoleRestControllerTest extends BaseRestControllerTest<Role, Integer
   protected List<Role> parseJsonToList(StringBuilder builder)
       throws JsonParseException, JsonMappingException, IOException {
     ObjectMapper mapper = new ObjectMapper();
-    return mapper.readValue(builder.toString(), new TypeReference<List<Role>>() {
-    });
+    return mapper.readValue(builder.toString(), new TypeReference<List<Role>>() {});
   }
 
   @Override
   protected boolean compareTo(Role item1, Role item2) {
     return item1.getId().equals(item2.getId()) && item1.getName().equals(item2.getName());
+  }
+
+  @Override
+  protected Role parseJsonToObject(StringBuilder builder) throws JsonParseException, JsonMappingException, IOException {
+    ObjectMapper mapper = new ObjectMapper();
+    return mapper.readValue(builder.toString(), new TypeReference<Role>() {});
+  }
+
+  @Override
+  protected Integer getItemIdToTest() {
+    return 1;
   }
 }
