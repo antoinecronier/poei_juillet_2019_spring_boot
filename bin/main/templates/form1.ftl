@@ -12,7 +12,7 @@
 		</p>
 		<p>
 			<label for="tribe">Tribe</label> <input id="tribe" type="range"
-				name="tribe" min="10" max="50"></input>
+				name="tribe" min="10" max="50" step="10"></input>
 		</p>
 		<p>
 			<label for="email">Email</label> <input id="email" type="email"

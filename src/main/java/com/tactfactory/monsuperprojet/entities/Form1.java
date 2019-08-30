@@ -3,6 +3,7 @@ package com.tactfactory.monsuperprojet.entities;
 import java.time.LocalDateTime;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -10,15 +11,20 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Form1 {
 
   @Range(min = 0, max = 100)
+  @NotNull
   private Integer offset;
   @Range(min = 10, max = 50)
+  @NotNull
   private Integer tribe;
   @Email
+  @NotNull
   private String email;
   @Range(min = -10, max = 10)
+  @NotNull
   private Integer nombreItem;
   private String description;
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+  @NotNull
   private LocalDateTime appliqueA;
 
   public Integer getOffset() {
