@@ -1,3 +1,4 @@
+<#import "/spring.ftl" as spring/>
 <H1>User Create</H1>
 
 <form action="/customs/users/create" method="POST">
@@ -23,6 +24,9 @@
   Entreprise type:<br>
   <input type="text" name="entreprise.type" value="t1">
   <br><br>
+  <input type="hidden"
+            name="${_csrf.parameterName}"
+            value="${_csrf.token}"/>
 
   <input type="submit" value="Submit">
 </form>
