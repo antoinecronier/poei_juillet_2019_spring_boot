@@ -21,9 +21,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.authorizeRequests()
-    .antMatchers("/index/**").hasAnyRole("USER","ADMIN").anyRequest().authenticated()
-    .antMatchers("/index2").hasRole("ADMIN").anyRequest().authenticated()
-    .anyRequest().authenticated()
-    .and().httpBasic();
+      .antMatchers("/index").hasAnyRole("USER","ADMIN")
+      .antMatchers("/index2").hasRole("ADMIN")
+      .anyRequest().authenticated()
+    .and()
+      .formLogin()
+    .and()
+      .logout()
+        .deleteCookies("JSESSIONID")
+        .logoutSuccessUrl("http://www.google.com")
+    .and()
+      .httpBasic();
   }
 }
