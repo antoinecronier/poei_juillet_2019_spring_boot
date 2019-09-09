@@ -18,6 +18,7 @@ public class Form1 {
   private Integer tribe;
   @Email
   @NotNull
+
   private String email;
   @Range(min = -10, max = 10)
   @NotNull

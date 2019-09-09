@@ -18,8 +18,12 @@ public class Form1Controller {
   }
 
   @PostMapping
-  public String postForm(@Valid Form1 form1) {
+  public String postForm(@Valid Form1 form1) throws Exception {
     System.out.println(form1);
+
+    if (form1.getEmail() == null || form1.getEmail().trim().isEmpty()) {
+      throw new Exception("email not correctly set");
+    }
 
     return "redirect:/forms/form1";
   }
