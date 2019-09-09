@@ -19,8 +19,13 @@ import com.tactfactory.monsuperprojet.database.contracts.UserContract;
 
 @Entity
 @Table(name = UserContract.TABLE)
-@AttributeOverride(name = "id", column = @Column(name=UserContract.COL_ID))
-public class User extends EntityDb{
+@AttributeOverride(name = "id", column = @Column(name = UserContract.COL_ID))
+public class User extends EntityDb {
+
+  @Column(unique=true)
+  private String login;
+
+  private String password;
 
   @JsonProperty(value = UserContract.COL_FIRSTNAME)
   @Column(name = UserContract.COL_FIRSTNAME, nullable = false)
@@ -32,98 +37,123 @@ public class User extends EntityDb{
 
   @JsonProperty(value = UserContract.COL_DATE_OF_BIRTH)
   @Column(name = UserContract.COL_DATE_OF_BIRTH, nullable = false)
-  @DateTimeFormat(pattern = "yyyy-MM-dd",iso=ISO.DATE)
+  @DateTimeFormat(pattern = "yyyy-MM-dd", iso = ISO.DATE)
   private Date dateOfBirth;
 
   @JsonProperty(value = UserContract.COL_FK_ID_ROLE)
-  @ManyToOne(targetEntity=Role.class,optional=true)
-  @JoinColumn(name=UserContract.COL_FK_ID_ROLE, referencedColumnName=RoleContract.COL_ID)
+  @ManyToOne(targetEntity = Role.class, optional = true)
+  @JoinColumn(name = UserContract.COL_FK_ID_ROLE, referencedColumnName = RoleContract.COL_ID)
   private Role role;
 
   @JsonProperty(value = UserContract.COL_FK_ID_ENTREPRISE)
-  @ManyToOne(targetEntity=Entreprise.class,optional=true)
-  @JoinColumn(name=UserContract.COL_FK_ID_ENTREPRISE, referencedColumnName=EntrepriseContract.COL_ID)
+  @ManyToOne(targetEntity = Entreprise.class, optional = true)
+  @JoinColumn(name = UserContract.COL_FK_ID_ENTREPRISE, referencedColumnName = EntrepriseContract.COL_ID)
   private Entreprise entreprise;
 
   /**
    * @return the firstname
    */
   public String getFirstname() {
-      return firstname;
+    return firstname;
   }
 
   /**
    * @param firstname the firstname to set
    */
   public void setFirstname(String firstname) {
-      this.firstname = firstname;
+    this.firstname = firstname;
   }
 
   /**
    * @return the lastname
    */
   public String getLastname() {
-      return lastname;
+    return lastname;
   }
 
   /**
    * @param lastname the lastname to set
    */
   public void setLastname(String lastname) {
-      this.lastname = lastname;
+    this.lastname = lastname;
   }
 
   /**
    * @return the dateOfBirth
    */
   public Date getDateOfBirth() {
-      return dateOfBirth;
+    return dateOfBirth;
   }
 
   /**
    * @param dateOfBirth the dateOfBirth to set
    */
   public void setDateOfBirth(Date dateOfBirth) {
-      this.dateOfBirth = dateOfBirth;
+    this.dateOfBirth = dateOfBirth;
   }
 
   public Role getRole() {
-      return role;
+    return role;
   }
 
   public void setRole(Role role) {
-      this.role = role;
+    this.role = role;
   }
 
   public Entreprise getEntreprise() {
-      return entreprise;
+    return entreprise;
   }
 
   public void setEntreprise(Entreprise entreprise) {
-      this.entreprise = entreprise;
+    this.entreprise = entreprise;
+  }
+
+  public String getLogin() {
+    return login;
+  }
+
+  public void setLogin(String login) {
+    this.login = login;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
   }
 
   @Override
   public String toString() {
-      return "User [firstname=" + firstname + ", lastname=" + lastname + ", dateOfBirth=" + dateOfBirth + ", role="
-              + role + ", entreprise=" + entreprise + ", getId()=" + getId() + "]";
+    return "User [firstname=" + firstname + ", lastname=" + lastname + ", dateOfBirth=" + dateOfBirth + ", role=" + role
+        + ", entreprise=" + entreprise + ", getId()=" + getId() + "]";
   }
 
   public User() {
   }
 
   public User(String firstname, String lastname, Date dateOfBirth) {
-      super();
-      this.firstname = firstname;
-      this.lastname = lastname;
-      this.dateOfBirth = dateOfBirth;
+    super();
+    this.firstname = firstname;
+    this.lastname = lastname;
+    this.dateOfBirth = dateOfBirth;
+  }
+
+  public User(String firstname, String lastname, Date dateOfBirth, String login, String password) {
+    super();
+    this.firstname = firstname;
+    this.lastname = lastname;
+    this.dateOfBirth = dateOfBirth;
+    this.login = login;
+    this.password = password;
   }
 
   public User(String firstname, String lastname, Date dateOfBirth, Role role, Entreprise entreprise) {
-      this.firstname = firstname;
-      this.lastname = lastname;
-      this.dateOfBirth = dateOfBirth;
-      this.role = role;
-      this.entreprise = entreprise;
+    this.firstname = firstname;
+    this.lastname = lastname;
+    this.dateOfBirth = dateOfBirth;
+    this.role = role;
+    this.entreprise = entreprise;
   }
 }

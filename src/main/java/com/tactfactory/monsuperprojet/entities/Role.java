@@ -14,7 +14,7 @@ import com.tactfactory.monsuperprojet.database.contracts.RoleContract;
 public class Role extends EntityDb {
 
     @JsonProperty(value = RoleContract.COL_NAME)
-    @Column(name = RoleContract.COL_NAME, nullable = false)
+    @Column(name = RoleContract.COL_NAME, unique=true)
     private String name;
 
     /**

@@ -44,7 +44,7 @@ public class DatasInsertors {
 
     List<String> professions = new ArrayList<String>();
     int i = 0;
-    while (i < 10) {
+    while (i < 2) {
       String prof = faker.company().profession();
       if (!professions.contains(prof)) {
         professions.add(prof);
@@ -65,7 +65,7 @@ public class DatasInsertors {
     List<Entreprise> entreprises = new ArrayList<Entreprise>();
 
     i = 0;
-    while (i < 10) {
+    while (i < 2) {
       String comp = faker.company().name();
       if (!companies.contains(comp)) {
         companies.add(comp);
@@ -81,8 +81,8 @@ public class DatasInsertors {
     entrepriseRepository.saveAll(entreprises);
 
     i = 0;
-    while (i < 100) {
-      User user = new User(faker.name().firstName(), faker.name().lastName(), faker.date().birthday());
+    while (i < 5) {
+      User user = new User(faker.name().firstName(), faker.name().lastName(), faker.date().birthday(),faker.name().firstName(),faker.beer().name());
       user.setEntreprise(entreprises.get(faker.random().nextInt(0, entreprises.size() - 1)));
       user.setRole(roles.get(faker.random().nextInt(0, roles.size() - 1)));
 
