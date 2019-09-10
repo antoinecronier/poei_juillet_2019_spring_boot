@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -33,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.authorizeRequests()
+//      .antMatchers(HttpMethod.GET,"/testAnt").hasIpAddress("127.0.0.1").anyRequest().anonymous()
       .antMatchers("/index").hasAnyRole("USER","ADMIN")
       .antMatchers("/index2").hasRole("ADMIN")
       .anyRequest().authenticated()
@@ -49,6 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .logoutUrl("/deconnexion")
         .deleteCookies("JSESSIONID")
         //.logoutSuccessUrl("http://www.google.com")
+//    .and()
+//      .csrf().ignoringAntMatchers("/login")
     .and()
       .httpBasic()
     .and()

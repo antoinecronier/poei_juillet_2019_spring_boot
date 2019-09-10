@@ -5,21 +5,22 @@ import java.util.Date;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Convert;
-import javax.persistence.Converter;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tactfactory.monsuperprojet.converters.StringToAESConverter;
-import com.tactfactory.monsuperprojet.converters.StringToBcryptConverter;
 import com.tactfactory.monsuperprojet.database.contracts.EntrepriseContract;
 import com.tactfactory.monsuperprojet.database.contracts.RoleContract;
 import com.tactfactory.monsuperprojet.database.contracts.UserContract;
+import com.tactfactory.monsuperprojet.validators.PasswordValidatorConstraint;
 
 @Entity
 @Table(name = UserContract.TABLE)
@@ -32,6 +33,11 @@ public class User extends EntityDb {
 
   //@Convert(converter = StringToBcryptConverter.class)
   private String password;
+
+  @PasswordValidatorConstraint
+  @Transient
+  @JsonIgnore
+  private String noEncodedPassword;
 
   @JsonProperty(value = UserContract.COL_FIRSTNAME)
   @Column(name = UserContract.COL_FIRSTNAME, nullable = false)
@@ -130,6 +136,8 @@ public class User extends EntityDb {
     this.password = password;
   }
 
+
+
 //  @Override
 //  public String toString() {
 //    return "User [firstname=" + firstname + ", lastname=" + lastname + ", dateOfBirth=" + dateOfBirth + ", role=" + role
@@ -137,6 +145,15 @@ public class User extends EntityDb {
 //  }
 
 
+@JsonIgnore
+  public String getNoEncodedPassword() {
+    return noEncodedPassword;
+  }
+
+@JsonIgnore
+  public void setNoEncodedPassword(String noEncodedPassword) {
+    this.noEncodedPassword = noEncodedPassword;
+  }
 
   public User() {
   }
@@ -155,13 +172,13 @@ public class User extends EntityDb {
     this.dateOfBirth = dateOfBirth;
   }
 
-  public User(String firstname, String lastname, Date dateOfBirth, String login, String password) {
+  public User(String firstname, String lastname, Date dateOfBirth, String login, String noEncodedPassword) {
     super();
     this.firstname = firstname;
     this.lastname = lastname;
     this.dateOfBirth = dateOfBirth;
     this.login = login;
-    this.password = password;
+    this.noEncodedPassword = noEncodedPassword;
   }
 
   public User(String firstname, String lastname, Date dateOfBirth, Role role, Entreprise entreprise) {

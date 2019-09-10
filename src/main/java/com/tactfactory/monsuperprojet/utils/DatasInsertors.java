@@ -7,7 +7,6 @@ import java.util.Locale;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.github.javafaker.Faker;
@@ -84,19 +83,19 @@ public class DatasInsertors {
     // Save all entreprise
     entrepriseRepository.saveAll(entreprises);
 
-    i = 0;
-    while (i < 5) {
-      User user = new User(faker.name().firstName(), faker.name().lastName(), faker.date().birthday(),faker.name().firstName(),faker.name().lastName());
-      user.setEntreprise(entreprises.get(faker.random().nextInt(0, entreprises.size() - 1)));
-      user.setRole(roles.get(faker.random().nextInt(0, roles.size() - 1)));
+//    i = 0;
+//    while (i < 5) {
+//      User user = new User(faker.name().firstName(), faker.name().lastName(), faker.date().birthday(),faker.name().firstName(),faker.name().lastName());
+//      user.setEntreprise(entreprises.get(faker.random().nextInt(0, entreprises.size() - 1)));
+//      user.setRole(roles.get(faker.random().nextInt(0, roles.size() - 1)));
+//
+//      // Save all user
+//      userRepository.save(user);
+//
+//      i++;
+//    }
 
-      // Save all user
-      userRepository.save(user);
-
-      i++;
-    }
-
-    User user = new User(faker.name().firstName(), faker.name().lastName(), faker.date().birthday(),"antoine","antoine");
+    User user = new User(faker.name().firstName(), faker.name().lastName(), faker.date().birthday(),"antoine","adminadmin");
     userService.save(user);
   }
 
