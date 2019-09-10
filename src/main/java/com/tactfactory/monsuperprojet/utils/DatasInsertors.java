@@ -82,7 +82,7 @@ public class DatasInsertors {
 
     i = 0;
     while (i < 5) {
-      User user = new User(faker.name().firstName(), faker.name().lastName(), faker.date().birthday(),faker.name().firstName(),faker.beer().name());
+      User user = new User(faker.name().firstName(), faker.name().lastName(), faker.date().birthday(),faker.name().firstName(),faker.name().lastName());
       user.setEntreprise(entreprises.get(faker.random().nextInt(0, entreprises.size() - 1)));
       user.setRole(roles.get(faker.random().nextInt(0, roles.size() - 1)));
 

@@ -1,6 +1,5 @@
 package com.tactfactory.monsuperprojet.controllers;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.websocket.server.PathParam;
@@ -61,5 +60,4 @@ public class UserAdvanceCrudController {
       System.out.println(userRich.getUser());
     }
   }
-
 }
