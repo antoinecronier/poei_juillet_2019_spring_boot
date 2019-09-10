@@ -17,6 +17,7 @@ import com.tactfactory.monsuperprojet.database.repositories.UserRepository;
 import com.tactfactory.monsuperprojet.entities.Entreprise;
 import com.tactfactory.monsuperprojet.entities.Role;
 import com.tactfactory.monsuperprojet.entities.User;
+import com.tactfactory.monsuperprojet.services.security.UserServiceImpl;
 
 @Service(value="baseDatasInsertors")
 public class DatasInsertors {
@@ -29,6 +30,9 @@ public class DatasInsertors {
 
   @Autowired
   private UserRepository userRepository;
+
+  @Autowired
+  private UserServiceImpl userService;
 
   public DatasInsertors() {
     System.out.println("coucou");
@@ -92,6 +96,8 @@ public class DatasInsertors {
       i++;
     }
 
+    User user = new User(faker.name().firstName(), faker.name().lastName(), faker.date().birthday(),"antoine","antoine");
+    userService.save(user);
   }
 
   public void insertOneShoot() {

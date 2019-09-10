@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Converter;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,6 +15,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tactfactory.monsuperprojet.converters.StringToAESConverter;
+import com.tactfactory.monsuperprojet.converters.StringToBcryptConverter;
 import com.tactfactory.monsuperprojet.database.contracts.EntrepriseContract;
 import com.tactfactory.monsuperprojet.database.contracts.RoleContract;
 import com.tactfactory.monsuperprojet.database.contracts.UserContract;
@@ -23,8 +27,10 @@ import com.tactfactory.monsuperprojet.database.contracts.UserContract;
 public class User extends EntityDb {
 
   @Column(unique=true)
+  @Convert(converter = StringToAESConverter.class)
   private String login;
 
+  //@Convert(converter = StringToBcryptConverter.class)
   private String password;
 
   @JsonProperty(value = UserContract.COL_FIRSTNAME)
@@ -124,13 +130,22 @@ public class User extends EntityDb {
     this.password = password;
   }
 
-  @Override
-  public String toString() {
-    return "User [firstname=" + firstname + ", lastname=" + lastname + ", dateOfBirth=" + dateOfBirth + ", role=" + role
-        + ", entreprise=" + entreprise + ", getId()=" + getId() + "]";
-  }
+//  @Override
+//  public String toString() {
+//    return "User [firstname=" + firstname + ", lastname=" + lastname + ", dateOfBirth=" + dateOfBirth + ", role=" + role
+//        + ", entreprise=" + entreprise + ", getId()=" + getId() + "]";
+//  }
+
+
 
   public User() {
+  }
+
+  @Override
+  public String toString() {
+    return "User [login=" + login + ", password=" + password + ", firstname=" + firstname + ", lastname=" + lastname
+        + ", dateOfBirth=" + dateOfBirth + ", role=" + role + ", entreprise=" + entreprise + ", getId()=" + getId()
+        + "]";
   }
 
   public User(String firstname, String lastname, Date dateOfBirth) {

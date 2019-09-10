@@ -1,9 +1,14 @@
 package com.tactfactory.monsuperprojet.services.security;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.tactfactory.monsuperprojet.database.repositories.RoleRepository;
 import com.tactfactory.monsuperprojet.database.repositories.UserRepository;
 import com.tactfactory.monsuperprojet.entities.User;
 
@@ -15,6 +20,12 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void save(User user) {
+    String idForEncode = "bcrypt";
+    Map<String, PasswordEncoder> encoders = new HashMap<String, PasswordEncoder>();
+    encoders.put(idForEncode, new BCryptPasswordEncoder());
+
+    PasswordEncoder passwordEncoder = new DelegatingPasswordEncoder(idForEncode, encoders);
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
     userRepository.save(user);
   }
 

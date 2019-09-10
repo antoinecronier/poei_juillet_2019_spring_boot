@@ -42,17 +42,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
       grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole().getName()));
     }
 
-    String idForEncode = "bcrypt";
-    Map<String, PasswordEncoder> encoders = new HashMap<String, PasswordEncoder>();
-    encoders.put(idForEncode, new BCryptPasswordEncoder());
-    encoders.put("pbkdf2", new Pbkdf2PasswordEncoder());
-    encoders.put("scrypt", new SCryptPasswordEncoder());
-
-    PasswordEncoder passwordEncoder = new DelegatingPasswordEncoder(idForEncode, encoders);
+//    String idForEncode = "bcrypt";
+//    Map<String, PasswordEncoder> encoders = new HashMap<String, PasswordEncoder>();
+//    encoders.put(idForEncode, new BCryptPasswordEncoder());
+//    encoders.put("pbkdf2", new Pbkdf2PasswordEncoder());
+//    encoders.put("scrypt", new SCryptPasswordEncoder());
+//
+//    PasswordEncoder passwordEncoder = new DelegatingPasswordEncoder(idForEncode, encoders);
 
     UserBuilder userBuilder = org.springframework.security.core.userdetails.User.builder();
     userBuilder.username(user.getLogin());
-    userBuilder.password(passwordEncoder.encode(user.getPassword()));
+    userBuilder.password(user.getPassword());
     userBuilder.authorities(grantedAuthorities);
 
     return userBuilder.build();
