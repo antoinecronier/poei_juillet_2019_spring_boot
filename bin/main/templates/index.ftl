@@ -1,7 +1,7 @@
 <#import "/spring.ftl" as spring/>
 <H1>User Create</H1>
 
-<form action="/customs/users/create" method="POST">
+<form action="<@spring.url '/customs/users/create'/>" method="POST">
   First name:<br>
   <input type="text" name="firstname" value="Mickey">
   <br>

@@ -1,6 +1,6 @@
 <H1>User Create</H1>
 
-<form action="/customs/users/createRich" method="POST">
+<form action="<@spring.url '/customs/users/createRich'/>" method="POST">
   First name:<br>
   <input type="text" name="user.firstname" value="Mickey">
   <br>

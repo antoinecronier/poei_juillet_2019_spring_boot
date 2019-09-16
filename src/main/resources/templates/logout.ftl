@@ -10,7 +10,7 @@
   </head>
   <body>
      <div class="container">
-      <form class="form-signin" method="post" action="/deconnexion">
+      <form class="form-signin" method="post" action="<@spring.url '/deconnexion'/>">
         <h2 class="form-signin-heading">Are you sure you want to log out?</h2>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
         <button class="btn btn-lg btn-primary btn-block" type="submit">Log Out</button>
