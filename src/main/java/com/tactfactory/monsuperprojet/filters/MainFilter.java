@@ -28,18 +28,19 @@ public class MainFilter implements Filter {
 
     System.out.println("content = " + res.getContentType());
 
-    if (!req.getRemoteAddr().equals("127.0.0.1")) {
-      chain.doFilter(request, response);
-
-      System.out.println("content = " + res.getContentType());
-    }else {
-      String responseToClient= "<tdcp><cmd><ack cmd=”Init”><panelistid>3849303</panelistid></ack></cmd></tdcp>";
-
-      res.setStatus(HttpServletResponse.SC_OK);
-      res.getWriter().write(responseToClient);
-      res.getWriter().flush();
-      res.getWriter().close();
-    }
+    chain.doFilter(request, response);
+//    if (!req.getRemoteAddr().equals("127.0.0.1")) {
+//      chain.doFilter(request, response);
+//
+//      System.out.println("content = " + res.getContentType());
+//    }else {
+//      String responseToClient= "<tdcp><cmd><ack cmd=”Init”><panelistid>3849303</panelistid></ack></cmd></tdcp>";
+//
+//      res.setStatus(HttpServletResponse.SC_OK);
+//      res.getWriter().write(responseToClient);
+//      res.getWriter().flush();
+//      res.getWriter().close();
+//    }
   }
 
 }
