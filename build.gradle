@@ -29,6 +29,8 @@ dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-web'
   compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.1.7.RELEASE'
 
+  compile group: 'org.springframework.session', name: 'spring-session-jdbc', version: '2.1.7.RELEASE'
+
   compile group: 'org.springframework.boot', name: 'spring-boot-starter-freemarker', version: '1.1.7.RELEASE'
 
   developmentOnly 'org.springframework.boot:spring-boot-devtools'
